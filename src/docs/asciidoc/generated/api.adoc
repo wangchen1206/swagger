@@ -1,0 +1,669 @@
+= BluePGS APP API Online
+
+
+[[_overview]]
+== Overview
+*App API Change History*
+* 2019.05.15 init by John Zhuang
+
+
+=== Version information
+[%hardbreaks]
+__Version__ : 1.0.0-SNAPSHOT
+
+
+=== Contact information
+[%hardbreaks]
+__Contact__ : John Zhuang
+__Contact Email__ : yinping.zhuang@hp.com
+
+
+=== URI scheme
+[%hardbreaks]
+__Host__ : 114.67.100.79:8085
+__BasePath__ : /
+
+
+=== Tags
+
+* AppMessages : App消息
+* File : File Controller
+* printers : Printer Controller
+* tasks : 打印任务
+
+
+
+
+[[_paths]]
+== Paths
+
+[[_uploadusingpost]]
+=== 文件上传
+....
+POST /app/v1/files
+....
+
+
+==== Parameters
+
+[options="header", cols=".^2,.^3,.^9,.^4"]
+|===
+|Type|Name|Description|Schema
+|**FormData**|**file** +
+__required__|file|file
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_filepathresponse,FilePathResponse>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `multipart/form-data`
+
+
+==== Produces
+
+* `*/*`
+
+
+==== Tags
+
+* File
+
+
+==== Example HTTP request
+
+===== Request path
+----
+/app/v1/files
+----
+
+
+===== Request formData
+[source,json]
+----
+"file"
+----
+
+
+==== Example HTTP response
+
+===== Response 200
+[source,json]
+----
+{
+  "path" : "string"
+}
+----
+
+
+[[_getprintersbyplatformcodeusingget]]
+=== getPrintersByPlatformCode
+....
+GET /app/v1/printers/{platformCode}
+....
+
+
+==== Parameters
+
+[options="header", cols=".^2,.^3,.^9,.^4"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**platformCode** +
+__required__|platformCode|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|< object > array
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `*/*`
+
+
+==== Tags
+
+* printers
+
+
+==== Example HTTP request
+
+===== Request path
+----
+/app/v1/printers/string
+----
+
+
+==== Example HTTP response
+
+===== Response 200
+[source,json]
+----
+[ "object" ]
+----
+
+
+[[_getprinterusingget]]
+=== getPrinter
+....
+GET /app/v1/printers/{platformCode}/{deviceId}
+....
+
+
+==== Parameters
+
+[options="header", cols=".^2,.^3,.^9,.^4"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**deviceId** +
+__required__|deviceId|string
+|**Path**|**platformCode** +
+__required__|platformCode|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_printerinfo,PrinterInfo>>
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `*/*`
+
+
+==== Tags
+
+* printers
+
+
+==== Example HTTP request
+
+===== Request path
+----
+/app/v1/printers/string/string
+----
+
+
+==== Example HTTP response
+
+===== Response 200
+[source,json]
+----
+{
+  "boardUsername" : "string",
+  "boardUuid" : "string",
+  "cartridges" : "string",
+  "color" : "string",
+  "counter" : "string",
+  "counterObj" : {
+    "copyImpressions" : 0,
+    "duplexSheets" : 0,
+    "jamEvents" : 0,
+    "mispickEvents" : 0,
+    "totalImpressions" : 0
+  },
+  "duplicateCount" : 0,
+  "iotChannel" : "string",
+  "ipv4Address" : "string",
+  "isUsbConnected" : "string",
+  "model" : "string",
+  "nickName" : "string",
+  "platformCode" : "string",
+  "productNumber" : "string",
+  "scanner" : "string",
+  "serialNumber" : "string",
+  "sid" : "string",
+  "status" : "string",
+  "trays" : "string",
+  "upTime" : "string",
+  "uuid" : "string"
+}
+----
+
+
+[[_printusingpost]]
+=== print
+....
+POST /app/v1/tasks/{platformCode}/{deviceId}/{user}
+....
+
+
+==== Parameters
+
+[options="header", cols=".^2,.^3,.^9,.^4"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**deviceId** +
+__required__|deviceId|string
+|**Path**|**platformCode** +
+__required__|platformCode|string
+|**Path**|**user** +
+__required__|user|string
+|**Body**|**printTaskVO** +
+__required__|printTaskVO|<<_4f0ca656a7a42b53acce9d0d4068cdb8,PrintTaskVO对象>>
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_printtaskresponse,PrintTaskResponse>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `*/*`
+
+
+==== Tags
+
+* tasks
+
+
+==== Example HTTP request
+
+===== Request path
+----
+/app/v1/tasks/string/string/string
+----
+
+
+===== Request body
+[source,json]
+----
+{
+  "delayMinutes" : 1,
+  "inUrl" : "string",
+  "printSetting" : {
+    "copies" : 0,
+    "duplex" : false,
+    "pagerSize" : "string",
+    "paperType" : "string",
+    "trayIndex" : 0
+  },
+  "timeHolder" : "2019-08-10 10:00:01"
+}
+----
+
+
+==== Example HTTP response
+
+===== Response 200
+[source,json]
+----
+{
+  "taskId" : "string"
+}
+----
+
+
+[[_getprintstatususingget]]
+=== getPrintStatus
+....
+GET /app/v1/tasks/{platformCode}/{user}/{taskId}
+....
+
+
+==== Parameters
+
+[options="header", cols=".^2,.^3,.^9,.^4"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**platformCode** +
+__required__|platformCode|string
+|**Path**|**taskId** +
+__required__|taskId|string
+|**Path**|**user** +
+__required__|user|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_printstatusresponse,PrintStatusResponse>>
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `*/*`
+
+
+==== Tags
+
+* tasks
+
+
+==== Example HTTP request
+
+===== Request path
+----
+/app/v1/tasks/string/string/string
+----
+
+
+==== Example HTTP response
+
+===== Response 200
+[source,json]
+----
+{
+  "message" : "string",
+  "status" : "string"
+}
+----
+
+
+[[_cancelprintusingput]]
+=== cancelPrint
+....
+PUT /app/v1/tasks/{platformCode}/{user}/{taskId}
+....
+
+
+==== Parameters
+
+[options="header", cols=".^2,.^3,.^9,.^4"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**platformCode** +
+__required__|platformCode|string
+|**Path**|**taskId** +
+__required__|taskId|string
+|**Path**|**user** +
+__required__|user|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_printstatusresponse,PrintStatusResponse>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `*/*`
+
+
+==== Tags
+
+* tasks
+
+
+==== Example HTTP request
+
+===== Request path
+----
+/app/v1/tasks/string/string/string
+----
+
+
+==== Example HTTP response
+
+===== Response 200
+[source,json]
+----
+{
+  "message" : "string",
+  "status" : "string"
+}
+----
+
+
+
+
+[[_definitions]]
+== Definitions
+
+[[_filepathresponse]]
+=== FilePathResponse
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|**path** +
+__optional__|**Example** : `"string"`|string
+|===
+
+
+[[_impressions]]
+=== Impressions
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|**copyImpressions** +
+__optional__|**Example** : `0`|integer (int32)
+|**duplexSheets** +
+__optional__|**Example** : `0`|integer (int32)
+|**jamEvents** +
+__optional__|**Example** : `0`|integer (int32)
+|**mispickEvents** +
+__optional__|**Example** : `0`|integer (int32)
+|**totalImpressions** +
+__optional__|**Example** : `0`|integer (int32)
+|===
+
+
+[[_b50c0a9046f16af7d2ec90d22a510672]]
+=== PrintSettingVO对象
+打印设置
+
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|**copies** +
+__optional__|打印份数 +
+**Example** : `0`|integer (int32)
+|**duplex** +
+__optional__|是否双面打印 +
+**Example** : `false`|boolean
+|**pagerSize** +
+__optional__|打印纸张 +
+**Example** : `"string"`|enum (A4, A5)
+|**paperType** +
+__optional__|纸张类型 +
+**Example** : `"string"`|enum (auto, plain, photo)
+|**trayIndex** +
+__optional__|纸盒 +
+**Example** : `0`|integer (int32)
+|===
+
+
+[[_printstatusresponse]]
+=== PrintStatusResponse
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|**message** +
+__optional__|**Example** : `"string"`|string
+|**status** +
+__optional__|**Example** : `"string"`|string
+|===
+
+
+[[_printtaskresponse]]
+=== PrintTaskResponse
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|**taskId** +
+__optional__|打印ID，随机6位数字 +
+**Example** : `"string"`|string
+|===
+
+
+[[_4f0ca656a7a42b53acce9d0d4068cdb8]]
+=== PrintTaskVO对象
+打印任务
+
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|**delayMinutes** +
+__optional__|延迟几分钟打印 +
+**Example** : `1`|integer (int64)
+|**inUrl** +
+__optional__|打印文件 +
+**Example** : `"string"`|string
+|**printSetting** +
+__optional__|打印设置 +
+**Example** : `"<<_b50c0a9046f16af7d2ec90d22a510672>>"`|<<_b50c0a9046f16af7d2ec90d22a510672,PrintSettingVO对象>>
+|**timeHolder** +
+__optional__|选择打印的时间点 +
+**Example** : `"2019-08-10 10:00:01"`|string (date-time)
+|===
+
+
+[[_printerinfo]]
+=== PrinterInfo
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|**boardUsername** +
+__optional__|**Example** : `"string"`|string
+|**boardUuid** +
+__optional__|**Example** : `"string"`|string
+|**cartridges** +
+__optional__|**Example** : `"string"`|string
+|**color** +
+__optional__|**Example** : `"string"`|string
+|**counter** +
+__optional__|**Example** : `"string"`|string
+|**counterObj** +
+__optional__|**Example** : `"<<_impressions>>"`|<<_impressions,Impressions>>
+|**duplicateCount** +
+__optional__|**Example** : `0`|integer (int32)
+|**iotChannel** +
+__optional__|**Example** : `"string"`|string
+|**ipv4Address** +
+__optional__|**Example** : `"string"`|string
+|**isUsbConnected** +
+__optional__|**Example** : `"string"`|string
+|**model** +
+__optional__|**Example** : `"string"`|string
+|**nickName** +
+__optional__|**Example** : `"string"`|string
+|**platformCode** +
+__optional__|**Example** : `"string"`|string
+|**productNumber** +
+__optional__|**Example** : `"string"`|string
+|**scanner** +
+__optional__|**Example** : `"string"`|string
+|**serialNumber** +
+__optional__|**Example** : `"string"`|string
+|**sid** +
+__optional__|**Example** : `"string"`|string
+|**status** +
+__optional__|**Example** : `"string"`|string
+|**trays** +
+__optional__|**Example** : `"string"`|string
+|**upTime** +
+__optional__|**Example** : `"string"`|string
+|**uuid** +
+__optional__|**Example** : `"string"`|string
+|===
+
+
+
+
+[[_securityscheme]]
+== Security
+
+[[_appid]]
+=== appId
+[%hardbreaks]
+__Type__ : apiKey
+__Name__ : AppId
+__In__ : HEADER
+
+
+[[_appsecurity]]
+=== appSecurity
+[%hardbreaks]
+__Type__ : apiKey
+__Name__ : AppSecurity
+__In__ : HEADER
+
+
+
